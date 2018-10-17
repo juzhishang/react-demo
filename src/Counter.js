@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+// import propTypes from 'prop-types'
 class Counter extends Component {
 
   constructor(props) {
@@ -22,13 +22,16 @@ class Counter extends Component {
       count: this.state.count - 1
     })
   }
-  // todo: buttonStyle
   render() {
     const { caption } = this.props
+    const buttonStyle = {
+      color: '#666',
+      margin: '0 5px',
+    }
     return (
       <div>
-        <button onClick={this.onClickIncrementButton}>+</button>
-        <button onClick={this.onClickDecrementButton}>-</button>
+        <button style={buttonStyle} onClick={this.onClickIncrementButton}>+</button>
+        <button style={buttonStyle} onClick={this.onClickDecrementButton}>-</button>
         <span>{caption} count: {this.state.count}</span>
       </div>
     )
@@ -38,5 +41,10 @@ class Counter extends Component {
 Counter.defaultProps = {
   initValue: 0
 }
+
+// Counter.propTypes = {
+//   caption: propTypes.string.isRequired,
+//   initValue: propTypes.number,
+// }
 
 export default Counter
