@@ -11,7 +11,22 @@ class Counter extends Component {
     this.state = {
       count: props.initValue,
     }
+
+    console.log(`1 costructor ${this.props.caption}`)
   }
+
+  componentWillMount() {
+    console.log(`2 componentWillMount ${this.props.caption}`)
+  }
+
+  componentDidMount() {
+    console.log(`4 componentDidMount ${this.props.caption}`)
+  }
+
+  componentWillReceiveProps() {
+    console.log(`5 componentWillReceiveProps ${this.props.caption}`)
+  }
+
   onClickIncrementButton() {
     this.setState({
       count: this.state.count + 1
@@ -28,6 +43,7 @@ class Counter extends Component {
       color: '#666',
       margin: '0 5px',
     }
+    console.log(`3 render ${this.props.caption}`)
     return (
       <div>
         <button style={buttonStyle} onClick={this.onClickIncrementButton}>+</button>
