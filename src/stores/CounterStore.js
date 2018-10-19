@@ -2,6 +2,7 @@ import AppDispatcher from '../AppDispatcher.js'
 import * as ActionTypes from '../ActionTypes.js'
 import {EventEmitter} from 'events'
 
+// 初始store
 const counterValues = {
   First: 0,
   Second: 10,
@@ -10,7 +11,9 @@ const counterValues = {
 
 const CHANGE_EVENT = 'changed'
 
+// 让store成为EventEmitter对象
 const CounterStore = Object.assign({}, EventEmitter.prototype, {
+  // 可以通过此方法获取store
   getCounterValues: function() {
     return counterValues
   },

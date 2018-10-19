@@ -5,6 +5,7 @@ import {EventEmitter} from 'events'
 
 const CHANGE_EVENT = 'changed'
 
+// 计算总数
 function computeSummary(counterValues) {
   let summary = 0
   for (const key in counterValues) {
