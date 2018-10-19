@@ -18,6 +18,23 @@ class ControlPanel extends Component {
     console.log(`5) componentWillReceiveProps`)
   }
 
+  shouldComponentUpdate(nextP, nextS) {
+    console.log(`6) shouldComponentUpdate`)
+    return true
+  }
+
+  componentWillUpdate() {
+    console.log(`7) componentWillUpdate`)
+  }
+
+  componentDidUpdate() {
+    console.log(`8) componentDidUpdate`)
+  }
+
+  componentWillUnmount() {
+    console.log(`9) componentWillUnmount`)
+  }
+
   render() {
     console.log(`3) render`)
     return (

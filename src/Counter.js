@@ -27,6 +27,24 @@ class Counter extends Component {
     console.log(`5 componentWillReceiveProps ${this.props.caption}`)
   }
 
+  shouldComponentUpdate(nextP, nextS) {
+    console.log(`6 shouldComponentUpdate ${this.props.caption}`)
+    return (nextP.caption !== this.props.caption) ||
+    (nextS.count !== this.state.count)
+  }
+
+  componentWillUpdate() {
+    console.log(`7 componentWillUpdate ${this.props.caption}`)
+  }
+
+  componentDidUpdate() {
+    console.log(`8 componentDidUpdate ${this.props.caption}`)
+  }
+
+  componentWillUnmount() {
+    console.log(`9 componentWillUnmount ${this.props.caption}`)
+  }
+
   onClickIncrementButton() {
     this.setState({
       count: this.state.count + 1
