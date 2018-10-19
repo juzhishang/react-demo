@@ -46,15 +46,27 @@ class Counter extends Component {
   }
 
   onClickIncrementButton() {
-    this.setState({
-      count: this.state.count + 1
-    })
+    this.updateCount(true)
+    // this.setState({
+    //   count: this.state.count + 1
+    // })
   }
   onClickDecrementButton() {
-    this.setState({
-      count: this.state.count - 1
-    })
+    this.updateCount(false)
+    // this.setState({
+    //   count: this.state.count - 1
+    // })
   }
+
+  updateCount(isIncrement) {
+    const prevValue = this.state.count
+    const newValue = isIncrement ? prevValue + 1 : prevValue - 1
+    this.setState({
+      count: newValue
+    })
+    this.props.onUpdate(newValue, prevValue)
+  }
+
   render() {
     const { caption } = this.props
     const buttonStyle = {
@@ -73,12 +85,14 @@ class Counter extends Component {
 }
 
 Counter.defaultProps = {
-  initValue: 0
+  initValue: 0,
+  onUpdate: f => f
 }
 
 Counter.propTypes = {
   caption: propTypes.string.isRequired,
   initValue: propTypes.number,
+  onUpdate: propTypes.func
 }
 
 export default Counter
