@@ -1,7 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
+import propTypes from 'prop-types'
 import store from '../Store.js'
 
 class Summary extends Component {
+  render() {
+    return (
+      <div>Total Count: {this.props.sum}</div>
+    )
+  }
+}
+
+Summary.propTypes = {
+  sum: propTypes.number.isRequired
+}
+
+class SummaryContainer extends Component {
   constructor(props) {
     super(props)
     // this绑定
@@ -20,6 +33,11 @@ class Summary extends Component {
     }
     return { sum }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.sum !== this.state.sum
+  }
+
   // 添加事件监听
   componentDidMount() {
     store.subscribe(this.onUpdate)
@@ -37,9 +55,9 @@ class Summary extends Component {
 
   render() {
     return (
-      <div>Total: {this.state.sum}</div>
+      <Summary sum={this.state.sum}></Summary>
     )
   }
 }
 
-export default Summary
+export default SummaryContainer

@@ -6,14 +6,40 @@ import * as Actions from '../Actions'
 
 
 class Counter extends Component {
+  render() {
+    const {caption, onIncrement, onDecrement, value} = this.props
+    const buttonStyle = {
+      color: '#666',
+      margin: '0 5px',
+    }
+
+    return (
+      <div>
+        <button style={buttonStyle} onClick={onIncrement}>+</button>
+        <button style={buttonStyle} onClick={onDecrement}>-</button>
+        <span>{caption} count: {value}</span>
+      </div>
+    )
+  }
+}
+
+Counter.propTypes = {
+  caption: propTypes.string.isRequired,
+  onIncrement: propTypes.func.isRequired,
+  onDecrement: propTypes.func.isRequired,
+  value: propTypes.number.isRequired,
+}
+
+class CounterContainer extends Component {
 
   constructor(props) {
     super(props)
 
     // this绑定
     this.onChange = this.onChange.bind(this)
-    this.onClickIncrementButton = this.onClickIncrementButton.bind(this)
-    this.onClickDecrementButton = this.onClickDecrementButton.bind(this)
+    this.onIncrement = this.onIncrement.bind(this)
+    this.onDecrement = this.onDecrement.bind(this)
+    this.getOwnState = this.getOwnState.bind(this)
 
     this.state = this.getOwnState()
   }
@@ -21,14 +47,14 @@ class Counter extends Component {
   // 防止不必要的渲染
   shouldComponentUpdate(nextProps, nextState) {
     return (nextProps.caption !== this.props.caption) ||
-           (nextState.count !== this.state.count);
+           (nextState.value !== this.state.value)
   }
 
   // 点击时派发action
-  onClickIncrementButton() {
+  onIncrement() {
     store.dispatch(Actions.increment(this.props.caption))
   }
-  onClickDecrementButton() {
+  onDecrement() {
     store.dispatch(Actions.decrement(this.props.caption))
   }
 
@@ -53,19 +79,11 @@ class Counter extends Component {
   }
 
   render() {
-    const value = this.state.value
-    const {caption} = this.props
-    const buttonStyle = {
-      color: '#666',
-      margin: '0 5px',
-    }
-
     return (
-      <div>
-        <button style={buttonStyle} onClick={this.onClickIncrementButton}>+</button>
-        <button style={buttonStyle} onClick={this.onClickDecrementButton}>-</button>
-        <span>{caption} count: {value}</span>
-      </div>
+      <Counter caption = {this.props.caption} 
+        onIncrement={this.onIncrement} 
+        onDecrement={this.onDecrement} 
+        value={this.state.value} />
     )
   }
 }
@@ -74,4 +92,4 @@ Counter.propTypes = {
   caption: propTypes.string.isRequired,
 }
 
-export default Counter
+export default CounterContainer

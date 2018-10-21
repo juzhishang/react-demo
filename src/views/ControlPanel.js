@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Counter from './Counter'
-import Summary from './Summary'
+import Counter from './Counter.js'
+import Summary from './Summary.js'
+
 class ControlPanel extends Component {
 
   render() {
