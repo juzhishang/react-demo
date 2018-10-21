@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import CounterStore from '../stores/CounterStore'
+import store from '../Store.js'
+
 import * as Actions from '../Actions'
 
 
@@ -14,10 +15,7 @@ class Counter extends Component {
     this.onClickIncrementButton = this.onClickIncrementButton.bind(this)
     this.onClickDecrementButton = this.onClickDecrementButton.bind(this)
 
-    // state初始化，数据从store中取
-    this.state = {
-      count: CounterStore.getCounterValues()[props.caption]
-    }
+    this.state = this.getOwnState()
   }
 
   // 防止不必要的渲染
@@ -28,31 +26,35 @@ class Counter extends Component {
 
   // 点击时派发action
   onClickIncrementButton() {
-    Actions.increment(this.props.caption)
+    store.dispatch(Actions.increment(this.props.caption))
   }
   onClickDecrementButton() {
-    Actions.decrement(this.props.caption)
+    store.dispatch(Actions.decrement(this.props.caption))
+  }
+
+  getOwnState() {
+    return {
+      value: store.getState()[this.props.caption]
+    }
   }
 
   // 添加事件监听
   componentDidMount() {
-    CounterStore.addChangeListener(this.onChange)
+    store.subscribe(this.onChange)
   }
 // 解除事件监听
   componentWillUnmount() {
-    CounterStore.removeChangeListener(this.onChange)
+    store.unsubscribe(this.onChange)
   }
 
   // 只要store变化就会触发onChange事件
   onChange() {
-    const newCount = CounterStore.getCounterValues()[this.props.caption]
-    this.setState({
-      count: newCount
-    })
+    this.setState(this.getOwnState())
   }
 
   render() {
-    const { caption } = this.props
+    const value = this.state.value
+    const {caption} = this.props
     const buttonStyle = {
       color: '#666',
       margin: '0 5px',
@@ -62,7 +64,7 @@ class Counter extends Component {
       <div>
         <button style={buttonStyle} onClick={this.onClickIncrementButton}>+</button>
         <button style={buttonStyle} onClick={this.onClickDecrementButton}>-</button>
-        <span>{caption} count: {this.state.count}</span>
+        <span>{caption} count: {value}</span>
       </div>
     )
   }
