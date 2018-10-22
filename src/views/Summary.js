@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 import propTypes from 'prop-types'
-import store from '../Store.js'
+
 
 class Summary extends Component {
   render() {
@@ -15,8 +15,8 @@ Summary.propTypes = {
 }
 
 class SummaryContainer extends Component {
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
     // this绑定
     this.onUpdate = this.onUpdate.bind(this)
     // 初始化state
@@ -24,7 +24,7 @@ class SummaryContainer extends Component {
   }
 
   getOwnState() {
-    const state = store.getState()
+    const state = this.context.store.getState()
     let sum = 0
     for (const key in state) {
       if (state.hasOwnProperty(key)) {
@@ -40,12 +40,12 @@ class SummaryContainer extends Component {
 
   // 添加事件监听
   componentDidMount() {
-    store.subscribe(this.onUpdate)
+    this.context.store.subscribe(this.onUpdate)
   }
 
   // 移除事件监听
   componentWillUnmount() {
-    store.unsubscribe(this.onUpdate)
+    this.context.store.unsubscribe(this.onUpdate)
   }
 
   // store变化触发，更新state
@@ -58,6 +58,10 @@ class SummaryContainer extends Component {
       <Summary sum={this.state.sum}></Summary>
     )
   }
+}
+
+SummaryContainer.contextTypes = {
+  store: propTypes.object
 }
 
 export default SummaryContainer

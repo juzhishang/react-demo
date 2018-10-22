@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import store from '../Store.js'
 
 import * as Actions from '../Actions'
 
@@ -32,8 +31,8 @@ Counter.propTypes = {
 
 class CounterContainer extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
 
     // this绑定
     this.onChange = this.onChange.bind(this)
@@ -52,25 +51,25 @@ class CounterContainer extends Component {
 
   // 点击时派发action
   onIncrement() {
-    store.dispatch(Actions.increment(this.props.caption))
+    this.context.store.dispatch(Actions.increment(this.props.caption))
   }
   onDecrement() {
-    store.dispatch(Actions.decrement(this.props.caption))
+    this.context.store.dispatch(Actions.decrement(this.props.caption))
   }
 
   getOwnState() {
     return {
-      value: store.getState()[this.props.caption]
+      value: this.context.store.getState()[this.props.caption]
     }
   }
 
   // 添加事件监听
   componentDidMount() {
-    store.subscribe(this.onChange)
+    this.context.store.subscribe(this.onChange)
   }
 // 解除事件监听
   componentWillUnmount() {
-    store.unsubscribe(this.onChange)
+    this.context.store.unsubscribe(this.onChange)
   }
 
   // 只要store变化就会触发onChange事件
@@ -88,8 +87,12 @@ class CounterContainer extends Component {
   }
 }
 
-Counter.propTypes = {
+CounterContainer.propTypes = {
   caption: propTypes.string.isRequired,
+}
+
+CounterContainer.contextTypes = {
+  store: propTypes.object
 }
 
 export default CounterContainer

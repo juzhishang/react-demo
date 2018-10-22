@@ -4,10 +4,16 @@ import './index.css';
 // import App from './App';
 // import ClickCounter from './ClickCounter'
 import ControlPanel from './views/ControlPanel'
+import Provider from './Provider.js'
+import store from './Store'
 // serviceWorker
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<ControlPanel />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <ControlPanel />
+  </Provider>
+, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
