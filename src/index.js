@@ -4,7 +4,8 @@ import './index.css';
 // import App from './App';
 // import ClickCounter from './ClickCounter'
 import ControlPanel from './views/ControlPanel'
-import Provider from './Provider.js'
+// 提供包含store的上下文
+import  { Provider}  from 'react-redux'
 import store from './Store'
 // serviceWorker
 import * as serviceWorker from './serviceWorker';
